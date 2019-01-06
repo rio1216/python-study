@@ -2,10 +2,12 @@ import urllib.request
 from datetime import datetime
 
 def rawWithAgent(url):
-    req = urllib.request.Request('{}?{}'.format(url, urllib.parse.urlencode(url)))
+    info("Fetching: " + url)
+    values = {"User-Agent": "Mozilla/5.0"}
+    req = urllib.request.Request('{}?{}'.format(url, urllib.parse.urlencode(values)))
     with urllib.request.urlopen(req) as res:
         body = res.read()
-        return body
+        return str(body)
 
 def info(message):
     print(getTime() + " " + message)
@@ -14,8 +16,8 @@ def getTime():
     return datetime.now().strftime("[%H:%M:%S]")
 
 def main():
-    # result = rawWithAgent("https://gist.githubusercontent.com/po1216/b790a14c827a0378bb37807dd6041b23/raw/ff6706c7fbb608f5da773a1575b50710cc3f72ec/Hello.txt")
-    info("Hello!")
+    result = rawWithAgent("https://raw.githubusercontent.com/rio1216/python-study/master/hello.txt")
+    info("Http Result: " + result)
 
 if __name__ == "__main__":
     main()
